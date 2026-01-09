@@ -108,7 +108,7 @@ PACK_TOOL_DIR=RKTools/linux/Linux_Pack_Firmware
 IMAGE_PATH=rockdev/Image-$TARGET_PRODUCT
 export PROJECT_TOP=`gettop`
 
-lunch $TARGET_PRODUCT-$BUILD_VARIANT
+#lunch $TARGET_PRODUCT-$BUILD_VARIANT
 
 DATE=$(date  +%Y%m%d.%H%M)
 STUB_PATH=Image/"$TARGET_PRODUCT"_"$BUILD_VARIANT"_"$KERNEL_DTS"_"$BUILD_VERSION"_"$DATE"
@@ -119,7 +119,7 @@ export STUB_PATCH_PATH=$STUB_PATH/PATCHES
 # build uboot
 if [ "$BUILD_UBOOT" = true ] ; then
 echo "start build uboot"
-cd u-boot && make clean &&  make mrproper &&  make distclean && ./make.sh $UBOOT_DEFCONFIG && cd -
+cd u-boot &&  make mrproper &&  make distclean && ./make.sh $UBOOT_DEFCONFIG && cd -
 if [ $? -eq 0 ]; then
     echo "Build uboot ok!"
 else
@@ -134,7 +134,7 @@ fi
 # build kernel
 if [ "$BUILD_KERNEL" = true ] ; then
 echo "Start build kernel"
-cd kernel && make clean && make $ADDON_ARGS ARCH=$KERNEL_ARCH $KERNEL_DEFCONFIG && make $ADDON_ARGS ARCH=$KERNEL_ARCH $KERNEL_DTS.img -j$BUILD_JOBS && cd -
+cd kernel && make $ADDON_ARGS ARCH=$KERNEL_ARCH $KERNEL_DEFCONFIG && make $ADDON_ARGS ARCH=$KERNEL_ARCH $KERNEL_DTS.img -j$BUILD_JOBS && cd -
 if [ $? -eq 0 ]; then
     echo "Build kernel ok!"
 else
@@ -208,11 +208,12 @@ if [ "$BUILD_UPDATE_IMG" = true ] ; then
     echo "Make update.img"
     if [[ $TARGET_PRODUCT =~ "PX30" ]]; then
 	cd $PACK_TOOL_DIR/rockdev && ./mkupdate_px30.sh
-    elif [[ $TARGET_PRODUCT =~ "rk356x_box" ]]; then
+    elif [[ $TARGET_PRODUCT =~ "ltx6_box" ]]; then
 	if [ "$BUILD_AB_IMAGE" = true ] ; then
 		cd $PACK_TOOL_DIR/rockdev && ./mkupdate_ab_$TARGET_PRODUCT.sh
 	else
-		cd $PACK_TOOL_DIR/rockdev && ./mkupdate_$TARGET_PRODUCT.sh
+	#	cd $PACK_TOOL_DIR/rockdev && ./mkupdate_$TARGET_PRODUCT.sh
+	      cd $PACK_TOOL_DIR/rockdev && ./mkupdate_rk356x_box.sh
 	fi
     else
 	if [ "$BUILD_AB_IMAGE" = true ] ; then
@@ -242,7 +243,7 @@ cp $IMAGE_PATH/* $STUB_PATH/IMAGES/
 
 #Generate patches
 
-.repo/repo/repo forall  -c "$PROJECT_TOP/device/rockchip/common/gen_patches_body.sh"
+.repo/repo/repo forall  -c "$PROJECT_TOP/device/lumifyx/common/gen_patches_body.sh"
 .repo/repo/repo manifest -r -o out/commit_id.xml
 #Copy stubs
 cp out/commit_id.xml $STUB_PATH/manifest_${DATE}.xml

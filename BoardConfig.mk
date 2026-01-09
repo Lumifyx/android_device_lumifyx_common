@@ -65,18 +65,18 @@ BOARD_SELINUX_ENFORCING ?= true
 TARGET_PREBUILT_KERNEL ?= kernel/arch/arm/boot/zImage
 TARGET_PREBUILT_RESOURCE ?= kernel/resource.img
 BOARD_PREBUILT_DTBIMAGE_DIR ?= kernel/arch/arm/boot/dts
-PRODUCT_PARAMETER_TEMPLATE ?= device/rockchip/common/scripts/parameter_tools/parameter.in
+PRODUCT_PARAMETER_TEMPLATE ?= device/lumifyx/common/scripts/parameter_tools/parameter.in
 TARGET_BOARD_HARDWARE_EGL ?= mali
 
 #Android GO configuration
 BUILD_WITH_GO_OPT ?= false
 
 ifeq ($(BUILD_WITH_GO_OPT), true)
-PRODUCT_FSTAB_TEMPLATE ?= device/rockchip/common/scripts/fstab_tools/fstab_go.in
+PRODUCT_FSTAB_TEMPLATE ?= device/lumifyx/common/scripts/fstab_tools/fstab_go.in
 PRODUCT_KERNEL_CONFIG += android-11-go.config
 else
-PRODUCT_FSTAB_TEMPLATE ?= device/rockchip/common/scripts/fstab_tools/fstab.in
-PRODUCT_KERNEL_CONFIG += android-11.config
+PRODUCT_FSTAB_TEMPLATE ?= device/lumifyx/common/scripts/fstab_tools/fstab.in
+#PRODUCT_KERNEL_CONFIG += android-11.config
 endif
 
 ifeq ($(TARGET_BUILD_VARIANT), user)
@@ -139,27 +139,27 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE ?= ext4
 # default.prop & build.prop split
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED ?= true
 
-DEVICE_MANIFEST_FILE ?= device/rockchip/common/manifest.xml
-DEVICE_MATRIX_FILE   ?= device/rockchip/common/compatibility_matrix.xml
+DEVICE_MANIFEST_FILE ?= device/lumifyx/common/manifest.xml
+DEVICE_MATRIX_FILE   ?= device/lumifyx/common/compatibility_matrix.xml
 
 #Calculate partition size from parameter.txt
 USE_DEFAULT_PARAMETER := $(shell test -f $(TARGET_DEVICE_DIR)/parameter.txt && echo true)
 ifeq ($(strip $(USE_DEFAULT_PARAMETER)), true)
   ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS), true)
-    BOARD_SUPER_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt super)
+    BOARD_SUPER_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt super)
     BOARD_ROCKCHIP_DYNAMIC_PARTITIONS_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 4194304)
   else
-    BOARD_SYSTEMIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt system)
-    BOARD_VENDORIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt vendor)
-    BOARD_ODMIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt odm)
+    BOARD_SYSTEMIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt system)
+    BOARD_VENDORIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt vendor)
+    BOARD_ODMIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt odm)
   endif
-  BOARD_CACHEIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt cache)
-  BOARD_BOOTIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt boot)
-  BOARD_DTBOIMG_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt dtbo)
-  BOARD_RECOVERYIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt recovery)
+  BOARD_CACHEIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt cache)
+  BOARD_BOOTIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt boot)
+  BOARD_DTBOIMG_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt dtbo)
+  BOARD_RECOVERYIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt recovery)
   # Header V3, add vendor_boot
   ifeq (1,$(strip $(shell expr $(BOARD_BOOT_HEADER_VERSION) \>= 3)))
-    BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := $(shell python device/rockchip/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt vendor_boot)
+    BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := $(shell python device/lumifyx/common/get_partition_size.py $(TARGET_DEVICE_DIR)/parameter.txt vendor_boot)
   endif
   #$(info Calculated BOARD_SYSTEMIMAGE_PARTITION_SIZE=$(BOARD_SYSTEMIMAGE_PARTITION_SIZE) use $(TARGET_DEVICE_DIR)/parameter.txt)
 else
@@ -242,10 +242,10 @@ VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 TARGET_BOOTLOADER_BOARD_NAME ?= rk30sdk
 TARGET_NO_BOOTLOADER ?= true
 ifeq ($(filter atv box, $(strip $(TARGET_BOARD_PLATFORM_PRODUCT))), )
-DEVICE_PACKAGE_OVERLAYS += device/rockchip/common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/lumifyx/common/overlay
 endif
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/rockchip/common
+TARGET_RELEASETOOLS_EXTENSIONS := device/lumifyx/common
 
 //MAX-SIZE=512M, for generate out/.../system.img
 BOARD_FLASH_BLOCK_SIZE := 131072
@@ -253,20 +253,20 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 # Sepolicy
 PRODUCT_SEPOLICY_SPLIT := true
 BOARD_SEPOLICY_DIRS ?= \
-    device/rockchip/common/sepolicy/vendor
-# BOARD_PLAT_PUBLIC_SEPOLICY_DIR ?= device/rockchip/common/sepolicy/public
+    device/lumifyx/common/sepolicy/vendor
+# BOARD_PLAT_PUBLIC_SEPOLICY_DIR ?= device/lumifyx/common/sepolicy/public
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR ?= \
-    device/rockchip/common/sepolicy/private \
-    device/rockchip/$(TARGET_BOARD_PLATFORM)/sepolicy
+    device/lumifyx/common/sepolicy/private \
+    device/lumifyx/$(TARGET_BOARD_PLATFORM)/sepolicy
 
 ifneq ($(BUILD_WITH_RK_EBOOK),true)
     BOARD_SEPOLICY_DIRS += \
-        device/rockchip/common/sepolicy/split
+        device/lumifyx/common/sepolicy/split
 endif
 
 ifeq ($(TARGET_BOARD_PLATFORM_PRODUCT),box)
     BOARD_SEPOLICY_DIRS += \
-        device/rockchip/common/box/sepolicy/vendor
+        device/lumifyx/common/box/sepolicy/vendor
 endif
 
 # Enable VNDK Check for Android P (MUST after P)
@@ -309,8 +309,9 @@ BOARD_USES_GENERIC_AUDIO ?= true
 BOARD_HAVE_BLUETOOTH ?= true
 BLUETOOTH_USE_BPLUS ?= false
 BOARD_HAVE_BLUETOOTH_BCM ?= false
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/rockchip/$(TARGET_BOARD_PLATFORM)/bluetooth
-include device/rockchip/common/wifi_bt_common.mk
+#BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/lumifyx/$(TARGET_BOARD_PLATFORM)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/lumifyx/rk356x_box/bluetooth
+include device/lumifyx/common/wifi_bt_common.mk
 
 #Camera flash
 BOARD_HAVE_FLASH ?= true
@@ -319,7 +320,7 @@ BOARD_HAVE_FLASH ?= true
 BOARD_SUPPORT_HDMI ?= true
 
 # gralloc 4.0
-include device/rockchip/common/gralloc.device.mk
+include device/lumifyx/common/gralloc.device.mk
 
 
 # google apps
@@ -440,7 +441,7 @@ BOARD_WIFI_SUPPORT ?= true
 BOARD_HAS_RK_4G_MODEM ?= false
 
 ifeq ($(strip $(BOARD_HAS_RK_4G_MODEM)),true)
-DEVICE_MANIFEST_FILE += device/rockchip/common/4g_modem/manifest.xml
+DEVICE_MANIFEST_FILE += device/lumifyx/common/4g_modem/manifest.xml
 endif
 
 #USE_CLANG_PLATFORM_BUILD ?= true
@@ -449,12 +450,12 @@ endif
 # Zoom out recovery ui of box by two percent.
 #ifneq ($(filter atv box, $(strip $(TARGET_BOARD_PLATFORM_PRODUCT))), )
 #    TARGET_RECOVERY_OVERSCAN_PERCENT := 2
-#    TARGET_BASE_PARAMETER_IMAGE ?= device/rockchip/common/baseparameter/baseparameter_fb720.img
+#    TARGET_BASE_PARAMETER_IMAGE ?= device/lumifyx/common/baseparameter/baseparameter_fb720.img
     # savBaseParameter tool
 #    ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
 #        PRODUCT_PACKAGES += saveBaseParameter
 #    endif
-#    DEVICE_FRAMEWORK_MANIFEST_FILE := device/rockchip/common/manifest_framework_override.xml
+#    DEVICE_FRAMEWORK_MANIFEST_FILE := device/lumifyx/common/manifest_framework_override.xml
 #endif
 
 #enable cpusets sched policy
@@ -508,9 +509,9 @@ endif
 BOARD_BASEPARAMETER_SUPPORT ?= true
 ifeq ($(strip $(BOARD_BASEPARAMETER_SUPPORT)), true)
 ifeq ($(strip $(TARGET_BOARD_PLATFORM)), rk356x)
-    TARGET_BASE_PARAMETER_IMAGE ?= device/rockchip/common/baseparameter/v2.0/baseparameter.img
+    TARGET_BASE_PARAMETER_IMAGE ?= device/lumifyx/common/baseparameter/v2.0/baseparameter.img
 else
-    TARGET_BASE_PARAMETER_IMAGE ?= device/rockchip/common/baseparameter/v1.0/baseparameter.img
+    TARGET_BASE_PARAMETER_IMAGE ?= device/lumifyx/common/baseparameter/v1.0/baseparameter.img
 endif
     BOARD_WITH_SPECIAL_PARTITIONS := baseparameter:1M
 endif

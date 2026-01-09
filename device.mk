@@ -49,7 +49,7 @@ ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), atv)
                       ATVContentProvider \
 
 else ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), box)
-  $(call inherit-product, device/rockchip/common/tv/tv_base.mk)
+  $(call inherit-product, device/lumifyx/common/tv/tv_base.mk)
 else ifeq ($(strip $(BUILD_WITH_GO_OPT))|$(strip $(TARGET_ARCH)) ,true|arm)
   # For arm Go tablet.
   $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_no_telephony.mk)
@@ -141,18 +141,18 @@ endif
 ifeq ($(strip $(BUILD_WITH_GO_OPT)),true)
 ifeq ($(strip $(TARGET_ARCH)), arm64)
 $(call inherit-product, build/target/product/go_defaults_512.mk)
-$(call inherit-product, device/rockchip/common/build/rockchip/AndroidGo512.mk)
+$(call inherit-product, device/lumifyx/common/build/rockchip/AndroidGo512.mk)
 else
 $(call inherit-product, build/target/product/go_defaults.mk)
 endif
-$(call inherit-product, device/rockchip/common/build/rockchip/AndroidGoCommon.mk)
+$(call inherit-product, device/lumifyx/common/build/rockchip/AndroidGoCommon.mk)
 PRODUCT_COPY_FILES += \
     device/rockchip/common/android.hardware.ram.low.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ram.low.xml \
     frameworks/native/data/etc/android.software.app_widgets.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.app_widgets.xml
 PRODUCT_PROPERTY_OVERRIDES += \
     config.disable_rtt=true \
     config.disable_consumerir=true
-DEVICE_PACKAGE_OVERLAYS += device/rockchip/common/overlay_go
+DEVICE_PACKAGE_OVERLAYS += device/lumifyx/common/overlay_go
 # Enable DM file pre-opting to reduce first boot time
 PRODUCT_DEX_PREOPT_GENERATE_DM_FILES := true
 PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := verify
@@ -206,18 +206,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 endif
 
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/init.rockchip.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rockchip.rc \
-    device/rockchip/common/init.mount_all_early.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mount_all.rc \
-    device/rockchip/common/init.tune_io.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.tune_io.rc \
+    device/lumifyx/common/init.rockchip.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rockchip.rc \
+    device/lumifyx/common/init.mount_all_early.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mount_all.rc \
+    device/lumifyx/common/init.tune_io.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.tune_io.rc \
     $(LOCAL_PATH)/init.insmod.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/init.insmod.cfg \
     $(LOCAL_PATH)/init.insmod.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.insmod.sh \
-    device/rockchip/common/init.$(TARGET_BOARD_HARDWARE).rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(TARGET_BOARD_HARDWARE).rc \
-    device/rockchip/common/init.$(TARGET_BOARD_HARDWARE).usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(TARGET_BOARD_HARDWARE).usb.rc \
-    device/rockchip/common/ueventd.rockchip.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc \
-    device/rockchip/common/rk29-keypad.kl:system/usr/keylayout/rk29-keypad.kl \
-    device/rockchip/common/ff680030_pwm.kl:system/usr/keylayout/ff680030_pwm.kl \
-     device/rockchip/common/alarm_filter.xml:system/etc/alarm_filter.xml \
-	device/rockchip/common/ff420030_pwm.kl:system/usr/keylayout/ff420030_pwm.kl
+    device/lumifyx/common/init.$(TARGET_BOARD_HARDWARE).rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(TARGET_BOARD_HARDWARE).rc \
+    device/lumifyx/common/init.$(TARGET_BOARD_HARDWARE).usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(TARGET_BOARD_HARDWARE).usb.rc \
+    device/lumifyx/common/ueventd.rockchip.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc \
+    device/lumifyx/common/rk29-keypad.kl:system/usr/keylayout/rk29-keypad.kl \
+    device/lumifyx/common/ff680030_pwm.kl:system/usr/keylayout/ff680030_pwm.kl \
+     device/lumifyx/common/alarm_filter.xml:system/etc/alarm_filter.xml \
+	device/lumifyx/common/ff420030_pwm.kl:system/usr/keylayout/ff420030_pwm.kl
 
 PRODUCT_COPY_FILES += \
     hardware/rockchip/libgraphicpolicy/graphic_profiles.conf:$(TARGET_COPY_OUT_VENDOR)/etc/graphic/graphic_profiles.conf
@@ -412,13 +412,13 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.external.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.external.xml
 
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
+    device/lumifyx/common/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-external-service
-DEVICE_MANIFEST_FILE += device/rockchip/common/manifests/android.hardware.camera.provider@2.4-provider.external.xml
+DEVICE_MANIFEST_FILE += device/lumifyx/common/manifests/android.hardware.camera.provider@2.4-provider.external.xml
 else
-DEVICE_MANIFEST_FILE += device/rockchip/common/manifests/android.hardware.camera.provider@2.4-provider.legacy.xml
+DEVICE_MANIFEST_FILE += device/lumifyx/common/manifests/android.hardware.camera.provider@2.4-provider.legacy.xml
 endif
 PRODUCT_PACKAGES += \
     librkisp_aec \
@@ -512,7 +512,7 @@ PRODUCT_PACKAGES += \
 endif
 
 # Include thermal HAL module
-$(call inherit-product, device/rockchip/common/modules/thermal.mk)
+$(call inherit-product, device/lumifyx/common/modules/thermal.mk)
 
 # Power AIDL
 PRODUCT_PACKAGES += \
@@ -559,8 +559,8 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@4.0-service
 
 DEVICE_MANIFEST_FILE += \
-    device/rockchip/common/manifests/android.hardware.graphics.mapper@4.0.xml \
-    device/rockchip/common/manifests/android.hardware.graphics.allocator@4.0.xml
+    device/lumifyx/common/manifests/android.hardware.graphics.mapper@4.0.xml \
+    device/lumifyx/common/manifests/android.hardware.graphics.allocator@4.0.xml
 else
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.mpp_buf_type=1
@@ -571,8 +571,8 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service
 
 DEVICE_MANIFEST_FILE += \
-    device/rockchip/common/manifests/android.hardware.graphics.mapper@2.1.xml \
-    device/rockchip/common/manifests/android.hardware.graphics.allocator@2.0.xml
+    device/lumifyx/common/manifests/android.hardware.graphics.mapper@2.1.xml \
+    device/lumifyx/common/manifests/android.hardware.graphics.allocator@2.0.xml
 endif
 
 PRODUCT_PACKAGES += \
@@ -893,10 +893,10 @@ include hardware/realtek/rtkbt/rtkbt.mk
 endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), box)
-    include device/rockchip/common/samba/rk31_samba.mk
+    include device/lumifyx/common/samba/rk31_samba.mk
     PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/init.box.samba.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.box.samba.rc \
-      device/rockchip/common/cifsmanager.sh:system/bin/cifsmanager.sh
+      device/lumifyx/common/cifsmanager.sh:system/bin/cifsmanager.sh
 
     PRODUCT_PROPERTY_OVERRIDES += \
       ro.rk.screenoff_time=2147483647
@@ -1057,18 +1057,18 @@ PRODUCT_PACKAGES += \
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), vr)
 PRODUCT_COPY_FILES += \
-       device/rockchip/common/lowmem_package_filter.xml:system/etc/lowmem_package_filter.xml 
+       device/lumifyx/common/lowmem_package_filter.xml:system/etc/lowmem_package_filter.xml 
 endif
 
 # neon transform library by djw
 PRODUCT_COPY_FILES += \
-	device/rockchip/common/neon_transform/lib/librockchipxxx.so:system/lib/librockchipxxx.so \
-	device/rockchip/common/neon_transform/lib64/librockchipxxx.so:system/lib64/librockchipxxx.so
+	device/lumifyx/common/neon_transform/lib/librockchipxxx.so:system/lib/librockchipxxx.so \
+	device/lumifyx/common/neon_transform/lib64/librockchipxxx.so:system/lib64/librockchipxxx.so
 
 # support eecolor hdr api
 PRODUCT_COPY_FILES += \
-        device/rockchip/common/eecolorapi/lib/libeecolorapi.so:system/lib/libeecolorapi.so \
-        device/rockchip/common/eecolorapi/lib64/libeecolorapi.so:system/lib64/libeecolorapi.so
+        device/lumifyx/common/eecolorapi/lib/libeecolorapi.so:system/lib/libeecolorapi.so \
+        device/lumifyx/common/eecolorapi/lib64/libeecolorapi.so:system/lib64/libeecolorapi.so
 
 #if force app can see udisk
 ifeq ($(strip $(BOARD_FORCE_UDISK_VISIBLE)),true)
@@ -1084,7 +1084,7 @@ endif
 
 #boot and shutdown animation, ringing
 ifeq ($(strip $(BOOT_SHUTDOWN_ANIMATION_RINGING)),true)
-include device/rockchip/common/bootshutdown/bootshutdown.mk
+include device/lumifyx/common/bootshutdown/bootshutdown.mk
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.shutdown_anim.orien=0
 endif
@@ -1092,7 +1092,7 @@ endif
 
 #boot video enable 
 ifeq ($(strip $(BOOT_VIDEO_ENABLE)),true)
-include device/rockchip/common/bootvideo/bootvideo.mk
+include device/lumifyx/common/bootvideo/bootvideo.mk
 endif
 
 ifeq ($(strip $(BOARD_ENABLE_PMS_MULTI_THREAD_SCAN)), true)
@@ -1144,7 +1144,7 @@ PRODUCT_PACKAGES += \
 
 #######for target product ########
 ifeq ($(TARGET_BOARD_PLATFORM_PRODUCT),box)
-  DEVICE_PACKAGE_OVERLAYS += device/rockchip/common/overlay_screenoff
+  DEVICE_PACKAGE_OVERLAYS += device/lumifyx/common/overlay_screenoff
   PRODUCT_PROPERTY_OVERRIDES += \
        ro.target.product=box \
 
@@ -1190,9 +1190,9 @@ ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.logd.kernel=1
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/zmodem/rz:$(TARGET_COPY_OUT_VENDOR)/bin/rz \
-    device/rockchip/common/zmodem/sz:$(TARGET_COPY_OUT_VENDOR)/bin/sz \
-    device/rockchip/common/picocom/bin/picocom:$(TARGET_COPY_OUT_VENDOR)/bin/picocom
+    device/lumifyx/common/zmodem/rz:$(TARGET_COPY_OUT_VENDOR)/bin/rz \
+    device/lumifyx/common/zmodem/sz:$(TARGET_COPY_OUT_VENDOR)/bin/sz \
+    device/lumifyx/common/picocom/bin/picocom:$(TARGET_COPY_OUT_VENDOR)/bin/picocom
 PRODUCT_PACKAGES += io
 endif
 
@@ -1308,17 +1308,17 @@ BOARD_TWRP_ENABLE ?= false
 
 #Build with UiMode Config
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/uimode/package_uimode_config.xml:vendor/etc/package_uimode_config.xml
+    device/lumifyx/common/uimode/package_uimode_config.xml:vendor/etc/package_uimode_config.xml
 
 # Zoom out recovery ui of box by two percent.
 ifneq ($(filter atv box, $(strip $(TARGET_BOARD_PLATFORM_PRODUCT))), )
     TARGET_RECOVERY_OVERSCAN_PERCENT := 2
-    TARGET_BASE_PARAMETER_IMAGE ?= device/rockchip/common/baseparameter/baseparameter.img
+    TARGET_BASE_PARAMETER_IMAGE ?= device/lumifyx/common/baseparameter/baseparameter.img
     # savBaseParameter tool
     ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
         PRODUCT_PACKAGES += saveBaseParameter
     endif
-    DEVICE_FRAMEWORK_MANIFEST_FILE := device/rockchip/common/manifest_framework_override.xml
+    DEVICE_FRAMEWORK_MANIFEST_FILE := device/lumifyx/common/manifest_framework_override.xml
 endif
 
 # add AudioSetting
@@ -1347,12 +1347,12 @@ else
         ro.flash_img.enable = false
 endif
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/flash_img/flash_img.sh:vendor/bin/flash_img.sh
+    device/lumifyx/common/flash_img/flash_img.sh:vendor/bin/flash_img.sh
 
 #read pcie info for Devicetest APK
 PRODUCT_COPY_FILES += \
-    device/rockchip/common/pcie/read_pcie_info.sh:vendor/bin/read_pcie_info.sh \
-    device/rockchip/common/pcie/lspcie:/vendor/bin/lspcie
+    device/lumifyx/common/pcie/read_pcie_info.sh:vendor/bin/read_pcie_info.sh \
+    device/lumifyx/common/pcie/lspcie:/vendor/bin/lspcie
 
 # Vendor seccomp policy files for media components:
 PRODUCT_COPY_FILES += \
@@ -1361,7 +1361,7 @@ PRODUCT_COPY_FILES += \
 BOARD_TV_LOW_MEMOPT ?= false
 
 ifeq ($(strip $(BOARD_TV_LOW_MEMOPT)), true)
-    include device/rockchip/common/tv/tv_low_ram_device.mk
+    include device/lumifyx/common/tv/tv_low_ram_device.mk
 endif
 
 #bt config for ap bt
@@ -1369,7 +1369,7 @@ PRODUCT_COPY_FILES += \
     $(TARGET_DEVICE_DIR)/bt_vendor.conf:/vendor/etc/bluetooth/bt_vendor.conf
 
 # Rockchip HALs
-$(call inherit-product, device/rockchip/common/manifests/frameworks/vintf.mk)
+$(call inherit-product, device/lumifyx/common/manifests/frameworks/vintf.mk)
 #for enable optee support
 ifeq ($(strip $(PRODUCT_HAVE_OPTEE)),true)
 
@@ -1408,12 +1408,12 @@ PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.0-service \
     android.hardware.gatekeeper@1.0-service.software
 
-DEVICE_MANIFEST_FILE += device/rockchip/common/manifests/android.hardware.keymaster@4.0-service.xml
+DEVICE_MANIFEST_FILE += device/lumifyx/common/manifests/android.hardware.keymaster@4.0-service.xml
 
 endif
 
 ifeq ($(BOARD_MEMTRACK_SUPPORT),true)
-    DEVICE_MANIFEST_FILE += device/rockchip/common/manifests/android.hardware.memtrack@1.0-service.xml
+    DEVICE_MANIFEST_FILE += device/lumifyx/common/manifests/android.hardware.memtrack@1.0-service.xml
     PRODUCT_PACKAGES += \
         android.hardware.memtrack@1.0-service \
         android.hardware.memtrack@1.0-impl \
