@@ -253,16 +253,29 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service
 endif
 
+BOARD_HAS_RK_4G_MODEM ?= true
 
 ifeq ($(strip $(BOARD_HAS_RK_4G_MODEM)),true)
+DEVICE_MANIFEST_FILE += device/rockchip/common/4g_modem/manifest.xml
 PRODUCT_PACKAGES += \
     CarrierDefaultApp \
     CarrierConfig \
     rild \
     librk-ril \
-    dhcpcd
+    dhcpcd \
+    libreference-ril-quectel \
+    Telecom \
+    TelephonyProvider \
+    Telephony-common \
+    dhcptool \
+    messaging \
+    Dialer \
+    libril_legacy \
+    TeleService
+
 
 PRODUCT_COPY_FILES += vendor/rockchip/common/phone/etc/apns-full-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
+PRODUCT_COPY_FILES += device/rockchip/common/4g_modem/lib64/libreference-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libreference-ril-quectel.so
 
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.2-radio-service \
@@ -274,18 +287,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 ifeq ($(strip $(TARGET_ARCH)), arm64)
 PRODUCT_PROPERTY_OVERRIDES += \
-		vendor.rild.libpath=/vendor/lib64/librk-ril.so
+		vendor.rild.libpath=/vendor/lib64/libreference-ril-quectel.so
 
 PRODUCT_COPY_FILES += \
-		$(LOCAL_PATH)/4g_modem/bin64/dhcpcd:$(TARGET_COPY_OUT_VENDOR)/bin/dhcpcd \
-		$(LOCAL_PATH)/4g_modem/lib64/librk-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib64/librk-ril.so
+		$(LOCAL_PATH)/4g_modem/bin64/dhcpcd:$(TARGET_COPY_OUT_VENDOR)/bin/dhcpcd 
+	#	$(LOCAL_PATH)/4g_modem/lib64/librk-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib64/librk-ril.so
 else
 PRODUCT_PROPERTY_OVERRIDES += \
-		vendor.rild.libpath=/vendor/lib/librk-ril.so
+		vendor.rild.libpath=/vendor/lib64/libreference-ril-quectel.so
 
 PRODUCT_COPY_FILES += \
 		$(LOCAL_PATH)/4g_modem/bin32/dhcpcd:$(TARGET_COPY_OUT_VENDOR)/bin/dhcpcd \
-		$(LOCAL_PATH)/4g_modem/lib32/librk-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib/librk-ril.so
+		$(LOCAL_PATH)/4g_modem/lib32/libreference-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib/libreference-ril-quectel.so
 
 endif
 endif
